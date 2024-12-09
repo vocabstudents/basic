@@ -1,16 +1,16 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-function Profile({ name, img, desc, link }) {
+function Profile({ profile }) {
     return (
-        <Card className='col-md-4'>
-            <Card.Img variant="top" src="https://avatars.githubusercontent.com/u/185526098?v=4" />
+        <Card className='col-md-3'>
+            <Card.Img variant="top" src={profile.img} />
             <Card.Body>
-                <Card.Title>Vocab</Card.Title>
+                <Card.Title>{profile.name}</Card.Title>
                 <Card.Text>
-                    I am teaching MERN Stack.
+                  {profile.desc}
                 </Card.Text>
-                <a href='https://github.com/vocabstudents' target='_black' variant="primary"><Button>Github Profile</Button>
+                <a href={profile.link} target='_' variant="primary"><Button>{profile.btn}</Button>
                 </a>
             </Card.Body>
         </Card>
