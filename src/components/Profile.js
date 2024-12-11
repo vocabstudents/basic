@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 
 function Profile({ profile }) {
     return (
-        <Card className='col-md-3'>
+        <Card className='col-md-2 m-1'>
             <Card.Img variant="top" src={profile.img} />
             <Card.Body>
                 <Card.Title>{profile.name}</Card.Title>
