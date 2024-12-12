@@ -16,7 +16,7 @@ function ProfileTable({ profiles }) {
         {profiles.map((profile,index) => {
           return (
             <tr>
-              <td>{index+1}</td>
+              <td>{index}</td>
               <td>{profile.name}</td>
               <td>{profile.desc}</td>
               <td>
