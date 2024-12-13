@@ -90,12 +90,12 @@ function App() {
                 {/* Submit Button */}
                 <Button variant="primary" type="submit" onClick={(e)=>{
                   e.preventDefault()
-                  setProfiles([
-                    {
-                      name: name,
-                      desc: desc,
-                      link: link,
-                    }
+                  setProfiles((old)=>[{
+                    name: name,
+                    desc: desc,
+                    link: link,
+                  },
+                    ...old
                   ])
                 }}>
                   Add Profile
