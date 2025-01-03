@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Btn from "./components/Btn";
 import Profile from "./components/Profile";
 import ProfileTable from "./components/ProfileTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [name, setName] = useState("")
@@ -16,6 +16,34 @@ function App() {
   const [link, setLink] = useState("")
 
   const [profiles, setProfiles] = useState([]);
+  const [singleProfile, setSingleProfile] = useState({
+    id:"",
+    insta: "",
+    name: "",
+    desc: ""
+  });
+  
+  useEffect(()=>{
+    // get all profile
+    fetch('http://localhost:8000/profiles')
+    .then((res) => {
+      return res.json();
+    })
+    .then((res)=>{
+      setProfiles(res)
+    })
+    .catch((error)=>{console.log(error)})
+    
+    // get single profile
+    // fetch('http://localhost:8000/profile/1')
+    // .then((res) => {
+    //   return res.json();
+    // })
+    // .then((res)=>{
+    //   setSingleProfile(res)
+    // })
+    // .catch((error)=>{console.log(error)})
+  },[]);
 
   // const profiles = [
   //   {
@@ -44,10 +72,68 @@ function App() {
   return (
     <div className="container mt-4">
       <h1>Profiles</h1>
+      <div className="row mb-4">
+        {/* Create Profile Form */}
+        <div className="col-md-4">
+          <div className="card">
+            {/* heading */}
+            <div className="card-header">
+              <h3>Update Profile</h3>
+            </div>
+            {/* body */}
+            <div className="card-body">
+              <Form>
+                {/* Name */}
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter Name" onChange={(e)=>{setName(e.target.value)}} value={singleProfile.name}/>
+                  {/* <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                  </Form.Text> */}
+                </Form.Group>
+                {/* Description */}
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control type="text" placeholder="Enter Description" onChange={(e)=>{setDesc(e.target.value)}} value={singleProfile.desc}/>
+                  {/* <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                  </Form.Text> */}
+                </Form.Group>
+                {/* Link */}
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Link</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Github Profile Link"
+                    onChange={(e)=>{setLink(e.target.value)}}
+                    value={singleProfile.insta}
+                  />
+                  {/* <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                  </Form.Text> */}
+                </Form.Group>
+                {/* Submit Button */}
+                <Button variant="primary" type="submit" onClick={(e)=>{
+                  e.preventDefault()
+                  setProfiles((old)=>[{
+                    name: name,
+                    desc: desc,
+                    link: link,
+                  },
+                    ...old
+                  ])
+                }}>
+                  Edit Profile
+                </Button>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="row">
         {/* Profile List */}
         <div className="col-md-8">
-          <ProfileTable profiles={profiles} />
+          <ProfileTable profiles={profiles} setSingleProfile={setSingleProfile} />
         </div>
         {/* Create Profile Form */}
         <div className="col-md-4">

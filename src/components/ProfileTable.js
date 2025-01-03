@@ -1,7 +1,7 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
-function ProfileTable({ profiles }) {
+function ProfileTable({ profiles, setSingleProfile }) {
   return (
     <Table striped bordered hover>
       <thead>
@@ -10,12 +10,13 @@ function ProfileTable({ profiles }) {
           <th>Name</th>
           <th>Description</th>
           <th>Github Profile Link</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {profiles.map((profile,index) => {
           return (
-            <tr>
+            <tr key={profile.id}>
               <td>{index+1}</td>
               <td>{profile.name}</td>
               <td>{profile.desc}</td>
@@ -23,6 +24,18 @@ function ProfileTable({ profiles }) {
                 <a href={profile.link} target="_" variant="primary">
                   <Button>Github Profile</Button>
                 </a>
+              </td>
+              <td>
+                <Button onClick={()=>{
+                  fetch('http://localhost:8000/profile/'+profile.id)
+                  .then((res) => {
+                    return res.json();
+                  })
+                  .then((res)=>{
+                    setSingleProfile(res)
+                  })
+                  .catch((error)=>{console.log(error)})
+                }}>Edit</Button>
               </td>
             </tr>
           );
